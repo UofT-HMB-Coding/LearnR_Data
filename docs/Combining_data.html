@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Amanda Ng, Abby Frix">
+<meta name="author" content="Amanda Ng, Abigail Frix">
 
 <title>Combining Data – R Tutorial: Working with Data</title>
 <style>
@@ -156,7 +156,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Amanda Ng, Abby Frix </p>
+             <p>Amanda Ng, Abigail Frix </p>
           </div>
   </div>
     
@@ -219,8 +219,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoidW5pcXVlKHBmYXNfZGF0YSRT
 <h2 class="anchored" data-anchor-id="question">QUESTION</h2>
 <div class="webex-check webex-box">
 Which of the following variables should be used to join the pfas and birth datasets?
-<div id="radio_UDWHCKRRMG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UDWHCKRRMG" value="answer"> <span><code>State</code> (pfas) and <code>State.Abbreviation</code> (birth)</span></label><label><input type="radio" autocomplete="off" name="radio_UDWHCKRRMG" value=""> <span><code>State</code> (pfas) and <code>State.of.Residence</code> (birth)</span></label><label><input type="radio" autocomplete="off" name="radio_UDWHCKRRMG" value=""> <span><code>State</code> (pfas) and <code>State.Code</code> (birth)</span></label>
+<div id="radio_MPUPRJGVYN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MPUPRJGVYN" value="answer"> <span><code>State</code> (pfas) and <code>State.Abbreviation</code> (birth)</span></label><label><input type="radio" autocomplete="off" name="radio_MPUPRJGVYN" value=""> <span><code>State</code> (pfas) and <code>State.of.Residence</code> (birth)</span></label><label><input type="radio" autocomplete="off" name="radio_MPUPRJGVYN" value=""> <span><code>State</code> (pfas) and <code>State.Code</code> (birth)</span></label>
 </div>
 </div>
 <p>So now we know which two columns to use. However, notice between the pfas and births datasets, even though the rows have the same shared values, the name of the columns are different. We must fix this first, and can do this using the <em>rename()</em> function.</p>
@@ -279,8 +279,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoic2VjXzEyIn0sImNvZGUi
 <h2 class="anchored" data-anchor-id="question-1">QUESTION</h2>
 <div class="webex-check webex-box">
 Why do we observe NA in the row about AS State?
-<div id="radio_NDTJTZBWJW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_NDTJTZBWJW" value=""> <span>AS State only exists in the <code>birth_data</code> dataset and does not exist in the <code>pfas_data_mean</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_NDTJTZBWJW" value="answer"> <span>AS State only exists in the <code>pfas_data_mean</code> dataset and does not exist in the <code>birth_data</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_NDTJTZBWJW" value=""> <span>Variables with NA values do not exist on the original <code>birth_data</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_NDTJTZBWJW" value=""> <span>Variables with NA values do not exist on the original <code>pfas_data_mean</code> dataset.</span></label>
+<div id="radio_HQJNTRJYIA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HQJNTRJYIA" value=""> <span>AS State only exists in the <code>birth_data</code> dataset and does not exist in the <code>pfas_data_mean</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_HQJNTRJYIA" value="answer"> <span>AS State only exists in the <code>pfas_data_mean</code> dataset and does not exist in the <code>birth_data</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_HQJNTRJYIA" value=""> <span>Variables with NA values do not exist on the original <code>birth_data</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_HQJNTRJYIA" value=""> <span>Variables with NA values do not exist on the original <code>pfas_data_mean</code> dataset.</span></label>
 </div>
 </div>
 </section>
