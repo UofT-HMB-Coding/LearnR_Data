@@ -138,6 +138,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">QUESTION</a></li>
   <li><a href="#confounding-variables" id="toc-confounding-variables" class="nav-link" data-scroll-target="#confounding-variables">Confounding Variables</a></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#return-to-learning-hub-homepage" id="toc-return-to-learning-hub-homepage" class="nav-link" data-scroll-target="#return-to-learning-hub-homepage">Return to Learning Hub Homepage</a></li>
   </ul>
 </nav>
     </div>
@@ -219,8 +220,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoidW5pcXVlKHBmYXNfZGF0YSRT
 <h2 class="anchored" data-anchor-id="question">QUESTION</h2>
 <div class="webex-check webex-box">
 Which of the following variables should be used to join the pfas and birth datasets?
-<div id="radio_MPUPRJGVYN" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MPUPRJGVYN" value="answer"> <span><code>State</code> (pfas) and <code>State.Abbreviation</code> (birth)</span></label><label><input type="radio" autocomplete="off" name="radio_MPUPRJGVYN" value=""> <span><code>State</code> (pfas) and <code>State.of.Residence</code> (birth)</span></label><label><input type="radio" autocomplete="off" name="radio_MPUPRJGVYN" value=""> <span><code>State</code> (pfas) and <code>State.Code</code> (birth)</span></label>
+<div id="radio_OHHIEYARKP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OHHIEYARKP" value="answer"> <span><code>State</code> (pfas) and <code>State.Abbreviation</code> (birth)</span></label><label><input type="radio" autocomplete="off" name="radio_OHHIEYARKP" value=""> <span><code>State</code> (pfas) and <code>State.of.Residence</code> (birth)</span></label><label><input type="radio" autocomplete="off" name="radio_OHHIEYARKP" value=""> <span><code>State</code> (pfas) and <code>State.Code</code> (birth)</span></label>
 </div>
 </div>
 <p>So now we know which two columns to use. However, notice between the pfas and births datasets, even though the rows have the same shared values, the name of the columns are different. We must fix this first, and can do this using the <em>rename()</em> function.</p>
@@ -279,8 +280,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoic2VjXzEyIn0sImNvZGUi
 <h2 class="anchored" data-anchor-id="question-1">QUESTION</h2>
 <div class="webex-check webex-box">
 Why do we observe NA in the row about AS State?
-<div id="radio_HQJNTRJYIA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_HQJNTRJYIA" value=""> <span>AS State only exists in the <code>birth_data</code> dataset and does not exist in the <code>pfas_data_mean</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_HQJNTRJYIA" value="answer"> <span>AS State only exists in the <code>pfas_data_mean</code> dataset and does not exist in the <code>birth_data</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_HQJNTRJYIA" value=""> <span>Variables with NA values do not exist on the original <code>birth_data</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_HQJNTRJYIA" value=""> <span>Variables with NA values do not exist on the original <code>pfas_data_mean</code> dataset.</span></label>
+<div id="radio_VAKTXPPDRE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_VAKTXPPDRE" value=""> <span>AS State only exists in the <code>birth_data</code> dataset and does not exist in the <code>pfas_data_mean</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_VAKTXPPDRE" value="answer"> <span>AS State only exists in the <code>pfas_data_mean</code> dataset and does not exist in the <code>birth_data</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_VAKTXPPDRE" value=""> <span>Variables with NA values do not exist on the original <code>birth_data</code> dataset.</span></label><label><input type="radio" autocomplete="off" name="radio_VAKTXPPDRE" value=""> <span>Variables with NA values do not exist on the original <code>pfas_data_mean</code> dataset.</span></label>
 </div>
 </div>
 </section>
@@ -292,6 +293,10 @@ Why do we observe NA in the row about AS State?
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>By this point in the module, you have learned a little bit about R and gained some experience running and modifying code to wrangle data.</p>
 <p>This is not intended to be a comprehensive introduction to R and the <strong><code>dplyr</code></strong> package (a <em>grammar of data manipulation</em> package which is part of the <code>tidyverse</code> package), but rather to highlight the code and functions that will be useful in HMB342, and provide you with an opportunity to experience coding with them. If you would like to learn more on data wrangling in R, please see <a href="https://r4ds.hadley.nz/">Wickham, H, Cetinkaya-Rundel, M, &amp; Grolemund, G (2023). R for Data Science (2e)</a>. Also, the <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Data Wrangling Cheatsheet</a> is a nice summary of the data wrangling functions that are available in the <strong><code>tidyverse</code></strong> package.</p>
+</section>
+<section id="return-to-learning-hub-homepage" class="level2">
+<h2 class="anchored" data-anchor-id="return-to-learning-hub-homepage">Return to Learning Hub Homepage</h2>
+<p><a href="https://uoft-hmb-coding.github.io" class="btn btn-primary">Learning Hub Homepage</a></p>
 
 
 <script type="webr-data">
