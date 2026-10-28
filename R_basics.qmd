@@ -1,0 +1,163 @@
+---
+title: "R Basics"
+author: "Amanda Ng, Abigail Frix"
+
+format:
+  live-html:
+    toc: true
+    number-sections: false
+  
+engine: knitr
+
+resources:
+  - data
+  - images
+
+webr:
+  packages:
+    - tidyverse
+
+live:
+  show-hints: true
+  show-solutions: true
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Basic computations
+
+First, R can simply function as a calculator. Run the following lines of code to see:
+
+```{webr}
+2 + 2 
+```
+
+```{webr}
+4 * 5
+```
+
+## Defining variables and vectors
+
+Values, like the ones generated above, can be assigned to create objects in R using `<-` command. For example:
+
+```{webr}
+t <- 5 
+
+1 + t 
+
+t^2
+
+t / 2
+```
+
+To create a vector, use the `c()` function, which stands for “combine” or “concatenate.” This function takes multiple values and combines them into a single vector. An element is defined as a single entry in the vector.
+
+```{webr}
+y <- c(67.25, 65.78, 70.14, 64.36, 66.67, 70.54) 
+y
+```
+
+It is important to note that R objects can be named pretty much anything, so long as they follow the software's naming conventions. Some suggestions in naming objects:
+
+-   names should be concise yet specific
+-   cannot begin with a number
+-   names are case sensitive (ie. data is not the same as Data)
+-   avoid using names of existing R functions (ie. mean, sum)
+-   use underscores in place of spaces
+-   try to keep your naming consistent as possible to improve readability!
+
+## Built in functions
+
+One of the important building blocks of R code are R functions. Functions allow you to automate routine and repetitive tasks in a more powerful and efficient way than doing the task manually. The syntax to run an R function is `function(argument1, argument2, etc.)`. For example, suppose a sequence of measurements are stored in a vector called `y` in R: `[67.25, 65.78, 70.14, 64.36, 66.67, 70.54]`. We can use the function `round()` to round each of the values in `y` to specified number of decimal places. The `round()` function expects two arguments, or inputs: the measurement(s) you wish to round, and the number of decimal places to which you wish to round. Click the "Run Code" button below to store the 6 measurements in `y` and round them to 1 decimal point.
+
+Remember you should first create the `y` vector.
+
+```{webr}
+y <- c() 
+round(y,1)
+```
+
+Try experimenting with the code above (e.g., try rounding to 0 decimal points, try changing, adding, or removing measurments in y), and running your revised code. You can get back to the original code by clicking on the Start Over button, or looking at the Solution.
+
+**This is your first R function!**
+
+If you are not sure about what a function does, or what arguments it expects, you can look at the R documentation that will appear in the Help tab in the lower right pane of RStudio when you use `?` or the `help()` function (with the function name as the argument) at the prompt (i.e., the `>`) in the Console tab in the bottom left pane of R Studio. For instance, typing `?round` or `help(round)` in the Console window in RStudio will open documentation on function round in the Help tab on the bottom right.
+
+It is good practice to **annotate your code** by including comments to note what is being done. However, if we type annotation text in the R Console or in an R Chunk like the ones in this document directly, the code will not run. Instead, we can add `#` in front of the text to comment it out, so it is not considered as part of the code and it will be ignored by R when the code is run. Comments can appear on their own lines or at the end of a line of R code. See the code below for examples.
+
+## Vector operations
+
+We can also perform arithmetic operations such as addition (`+`), subtraction (`-`), multiplication (`*`) and division (`/`) in R and can use round brackets for order of operations. For instance, suppose the measurements stored in `y` are heights in inches, and we wish to convert them to centimeters (recall that 1 in = 2.54 cm). The following code will do this conversion and store the heights in cm in a new R object (a vector) called `y_cm` . Note that comments have been added to demonstrate how code can be annotated in R.
+
+```{webr}
+# This is a comment
+# convert heights (in) to cm and store in y_cm
+y <- c(67.25, 65.78, 70.14, 64.36, 66.67, 70.54) 
+
+y_cm <- y * 2.54  # This is also a comment. 1 inch is 2.54 centimeters
+y_cm  # display the contents of R object ‘y_cm’
+
+```
+
+Let's try some more functions:
+
+```{webr}
+# square root
+x <- 144
+sqrt(x) 
+
+y<- c(67.25, 65.78, 70.14, 64.36, 66.67, 70.54)
+# mean, median, and range
+mean(y) 
+median(y)
+range(y)
+# standard deviation 
+sd(y)
+# minimum and maximum values 
+min(y)
+max(y)
+# Range
+range(y)
+# Interquartile range
+IQR(y)
+```
+
+**CODING EXERCISE**
+
+You give it a try! Suppose body temperatures (in degrees Celsius) of 5 study participants are stored in R object `tempc`. Convert these temperatures to degrees Fahrenheit, rounded to 1 decimal place and store in a new R object called `tempF` and display its contents. Include at least one comment to annotate your code. Note that degrees $F=C \times \frac{9}{5}+32$.
+
+The first line of code has been added to help get you started.
+
+::: panel-tabset
+## Exercise
+
+```{webr}
+#| exercise: ex_1
+tempc<-c(38.00, 38.37, 37.86, 38.45, 38.09)
+
+tempF <- 
+tempF
+```
+
+## Hints
+
+```{r}
+# Use round brackets so that R knows to compute 
+# 9/5 before multiplying by temperature in Celsius.
+```
+
+## Solution
+
+```{r}
+tempc <- c(38.00, 38.37, 37.86, 38.45, 38.09)
+
+# convert temp in C to F and round to 1 decimal place
+tempF <- round(tempc*(9/5)+32,1) 
+tempF # display temps in F that were stored in tempF
+
+```
+:::
+
+## Return to Learning Hub Homepage
+
+[Learning Hub Homepage](https://uoft-hmb-coding.github.io){.btn .btn-primary}

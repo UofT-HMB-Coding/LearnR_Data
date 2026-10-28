@@ -1,0 +1,95 @@
+---
+title: "Reading in data"
+author: "Amanda Ng, Abigail Frix"
+
+format:
+  live-html:
+    toc: true
+    number-sections: false
+  
+engine: knitr
+
+resources:
+  - data
+  - images
+
+webr:
+  packages:
+    - tidyverse
+
+live:
+  show-hints: true
+  show-solutions: true
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## R Packages
+
+**R packages** are collections of specialized functions and datasets developed by the R community.
+
+For this course we will rely heavily on `tidyverse`, a collection of R functions designed for data science. The tidyverse package has functions that will help us with data visualization (`ggplot`) and data wrangling, similar to SQL (`dplyr`).
+
+If an R package is *not* already installed in the R environment in which you’re working (e.g., [U of T JupyterHub](https://r.datatools.utoronto.ca/)), you need to
+
+1.  install the package using `install.packages`:
+
+```{webr}
+#| eval: false
+#| edit: false
+install.packages("tidyverse")
+```
+
+2.  load the package to use any of its R package functions using `library`:
+
+```{webr}
+#| edit: false
+library(tidyverse)
+```
+
+Now all R functions in the `tidyverse` package are available for use in your R/R Studio environment.
+
+In `tidyverse`, we often use `%>%` to connect different lines of code. `%>%` is a **pipe** that can perform a sequence of multiple operations, it sends the output of a function (previous line of code) directly as the input for the subsequent function (next line of code).
+
+## Reading in Data
+
+For this next part of the module, we are going to read in some data.
+
+The [Canadian Cannabis Survey (CCS)](https://open.canada.ca/data/en/dataset/2abe0796-c3e6-443b-a5c5-74e770e9fbe0) is a cross-sectional survey that collects information related to cannabis use for medical and non-medical purposes among 11,666 participants. The individuals surveyed were aged 16 years and older and represent residents of all Canadian provinces and territories.
+
+Over the next couple modules, we will be working with a subset of the CCS survey data collected between April 4, 2024 and July 2, 2024. Many datasets come with data dictionaries, which provide more insight into the variables and how they are measured.
+
+`read.csv`
+
+```{webr}
+#| edit: false
+# Use the read.csv function to create an object for the data - aka a dataframe
+# "data/cannabis_data.csv" is the path to the data file
+cannabis_data <- read.csv("data/cannabis_data.csv") 
+```
+
+You can look at the structure of an R object (e.g., like our data set called `cannabis_data`) using the R function `glimpse()`. Alternatively, we can use `head()`, which will display the first several rows and variables in the data set. Try running the following code to compare the output.
+
+```{webr}
+glimpse(cannabis_data)
+```
+
+```{webr}
+head(cannabis_data)
+```
+
+We see that the data have 11,666 rows (or observations) and 596 columns (or variables). From the `glimpse()` output, we also see the name of each variable, the data type of each variable (e.g., `<dbl>` stands for “double precision” and is a numeric data type and `<chr>` stands for “character string” and is non-numeric data type), and the first few elements of each variable. In this dataset most of the data types are `<int>`, which stands for "integer". Integers in this case are representative of the individual responses to the unique survey questions related to each column (more on that in the data dictionary!)
+
+We can also access the number of rows (i.e., observations) and columns (i.e., variables) in the dataset this way:
+
+```{webr}
+# Number of variables
+ncol(cannabis_data)
+
+# Number of observations
+nrow(cannabis_data)
+```
+
+## Return to Learning Hub Homepage
+
+[Learning Hub Homepage](https://uoft-hmb-coding.github.io){.btn .btn-primary}

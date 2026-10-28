@@ -1,0 +1,178 @@
+---
+title: "Combining Data "
+author: "Amanda Ng, Abigail Frix"
+
+format:
+  live-html:
+    toc: true
+    number-sections: false
+    css: [webex.css]
+    include-after-body: [webex.js]
+   
+engine: knitr
+
+resources:
+  - data
+  - images
+
+webr:
+  packages:
+    - tidyverse
+    - grid
+    - png
+
+live:
+  show-hints: true
+  show-solutions: true
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Combining Multiple Datasets
+
+Sometimes in working with data, one dataset does not have all of the variables or information you need to investigate the topics you are trying to explore. This is particularly pertinent with epidemiological research, as a lot of times epidemiologists have to investigate relationships between multiple variables that different organizations are responsible for measuring. For example, if you were looking at how air quality and pollution levels is related to acute respiratory infection incidence in a city, you'd likely find air quality measurements from an environmental research organization while finding respiratory infection incidence data from a public health organization.
+
+PFAS exposure is an environmental health risk, so for this next part we will be incorporating another dataset to look at an outcome of interest (reproductive outcomes). The [dataset](https://data.cdc.gov/browse?category=Pregnancy+%26+Vaccination&sortBy=relevance&page=1&pageSize=20) was taken from the CDC archives, looking fertility, birth rates, and birth weights across the US for 2023.
+
+```{r}
+#| include: false
+library(webexercises)
+```
+
+```{webr}
+#| echo: false
+birth_data <- read.csv("data/birth_data.csv")
+pfas_data <- read.csv("data/pfas_data.csv") 
+pfas_data_mean <- pfas_data %>%
+  filter(Analyte == "Total PFAS") %>% # Filter to only get total PFAS
+  group_by(State) %>% 
+  summarise(mean_ppt = mean(Value..PPT.))
+```
+
+```{webr}
+glimpse(birth_data)
+```
+
+```{webr}
+glimpse(pfas_data)
+```
+
+```{webr}
+unique(pfas_data$State)
+```
+
+To combine datasets correctly, it is important that the observations are matched correctly between datasets. Thus, there needs to be some shared characteristic or variable between datasets that can be used to join them together.
+
+## QUESTION
+::: {.webex-check .webex-box}
+
+```{r, results='asis', echo = FALSE}
+opts <- c(
+   answer = "`State` (pfas) and `State.Abbreviation` (birth)",
+   "`State` (pfas) and `State.of.Residence` (birth)",
+   "`State` (pfas) and `State.Code` (birth)"
+)
+
+cat("Which of the following variables should be used to join the pfas and birth datasets?", longmcq(opts))
+```
+
+:::
+
+So now we know which two columns to use. However, notice between the pfas and births datasets, even though the rows have the same shared values, the name of the columns are different. We must fix this first, and can do this using the *rename()* function.
+
+```{webr}
+# Lets change the name of the State.Abbreviation Column in birth_data to State to match pfas_data
+birth_data <- birth_data %>%
+  rename(State = State.Abbreviation)
+
+colnames(birth_data)
+colnames(pfas_data) # Verify that the column name is now shared between the datasets!
+
+glimpse(birth_data)
+glimpse(pfas_data)
+```
+
+Importantly, in performing a join correctly, it is imperative that the information is correctly representing both datasets.
+
+For example, birth_data is grouped by state, with 51 rows, while the original pfas_data dataset has 35,323 rows based on multiple observations per state. It is not correct to apply the average birth rate of a state to every unique location within a state. This would be a classic example of the *ecological fallacy*, or making inferences about smaller units or individuals based on aggregate data.
+
+When working with any geographical or location-based data, we have to use the same geographical unit of analysis between datasets (ie. State/Province, Municipality, Neighborhood, Postal Code, etc.) The *modifiable areal unit problem (MAUP)* is a statistical bias that can occur when there are discrepancies in how spatial boundaries are defined between datasets. The *scale effect* is one component of the MAUP, and occurs when altering the size of the scale of measurement yields different results (for example, looking at average income at the block level versus the census tract level will yield different results). Relating this back to the pfas and births datasets, it is likely that there is significant variation in the measurements at the regional/sample site and state levels respectively.
+
+Conclusively, the *ecological fallacy* and *MAUP* are important considerations when wrangling your data for analysis and drawing inferences from your results.
+
+So now that we have renamed the State column, we can use the *join()* function to join the datasets. In particular, there are three ways to join datasets (say A and B):
+
+-   A left join B: Retrieves all observations from A and matches observations from B based on the `by` argument, filling in `NA` for any columns where there's no match in B.
+-   A right join B: Retrieves all observations from B and matches observations from A based on the `by` argument, filling in `NA` for any columns where there's no match in A.
+-   A full join B: Returns all observations from both A and B, including both matching and non-matching observations.
+
+Let's use the total pfas mean values by state:
+
+```{webr}
+#| setup: true
+#| include: false
+#| autorun: true
+#| exercise: 
+#|    - sec_11
+#|    - sec_12
+birth_data <- read.csv("data/birth_data.csv")
+pfas_data <- read.csv("data/pfas_data.csv") 
+pfas_data_mean <- pfas_data %>%
+  filter(Analyte == "Total PFAS") %>% # Filter to only get total PFAS
+  group_by(State) %>% 
+  summarise(mean_ppt = mean(Value..PPT.))
+
+birth_data <- birth_data %>%
+  rename(State = State.Abbreviation)
+```
+
+```{webr}
+#| exercise: sec_11
+glimpse(pfas_data_mean)
+
+# Now join 
+pfas_births <- birth_data %>%
+  left_join(pfas_data_mean, by = "State") # Left join
+
+head(pfas_births)
+```
+
+Notice the importance of the order of how we left join datasets
+
+```{webr}
+#| exercise: sec_12
+pfas_births_reverse_order <- left_join(pfas_data_mean, birth_data,
+                    by = "State")
+head(pfas_births_reverse_order)
+```
+
+
+## QUESTION
+::: {.webex-check .webex-box}
+
+```{r, results='asis', echo = FALSE}
+opts <- c(
+   "AS State only exists in the `birth_data` dataset and does not exist in the `pfas_data_mean` dataset.",
+   answer = "AS State only exists in the `pfas_data_mean` dataset and does not exist in the `birth_data` dataset.",
+   "Variables with NA values do not exist on the original `birth_data` dataset.",
+   "Variables with NA values do not exist on the original `pfas_data_mean` dataset."
+)
+
+cat("Why do we observe NA in the row about AS State?", longmcq(opts))
+```
+
+:::
+
+## Confounding Variables
+
+In the last subsection, we mentioned how epidemiologists are often looking at multivariate relationships and some of the challenges that can come with that from a data wrangling perspective. A statistical challenge of analyzing multivariate relationships is the existence of *confounding variables*, which are factors that can influence the exposure and outcome variables simultaneously. If we think about how PFAS exposure's impact on health outcomes, socioeconomic status of a region could influence the environmental exposure and the health outcomes of a region. In other words, worse health outcomes in regions with high PFAS exposure could be due to the other challenges stemming from income disparity, such as less access to healthcare. In this case, observed associations between PFAS exposure and poor health outcomes could be partially explained by socioeconomic disparities rather than PFAS exposure alone. This example highlights the importance of considering confounders when deriving causality between variables.
+
+## Conclusions
+
+By this point in the module, you have learned a little bit about R and gained some experience running and modifying code to wrangle data.
+
+This is not intended to be a comprehensive introduction to R and the **`dplyr`** package (a *grammar of data manipulation* package which is part of the `tidyverse` package), but rather to highlight the code and functions that will be useful in HMB342, and provide you with an opportunity to experience coding with them. If you would like to learn more on data wrangling in R, please see [Wickham, H, Cetinkaya-Rundel, M, & Grolemund, G (2023). R for Data Science (2e)](https://r4ds.hadley.nz/). Also, the [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) is a nice summary of the data wrangling functions that are available in the **`tidyverse`** package.
+
+## Return to Learning Hub Homepage
+
+[Learning Hub Homepage](https://uoft-hmb-coding.github.io){.btn .btn-primary}

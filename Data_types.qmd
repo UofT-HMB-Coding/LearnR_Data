@@ -1,0 +1,234 @@
+---
+title: "Data types and working with vectors"
+author: "Amanda Ng, Abigail Frix"
+
+format:
+  live-html:
+    toc: true
+    number-sections: false
+  
+engine: knitr
+
+resources:
+  - data
+  - images
+
+webr:
+  packages:
+    - tidyverse
+
+live:
+  show-hints: true
+  show-solutions: true
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Data types
+
+In R, we can store different types of data, such as doubles (numeric values), integers, logical values (`TRUE`/`FALSE`), and characters (text). To check the type of an object, we use the `typeof()` function.
+
+```{webr}
+x <- 11.3
+typeof(x)
+
+x <- as.integer(11)
+typeof(x)
+
+x <- TRUE
+typeof(x)
+
+furniture <- "bed"
+typeof(furniture)
+```
+
+To create character variables in R, we enclose the text in quotation marks, like "...".
+
+```{webr}
+furniture <- "bed"
+typeof(furniture)
+```
+
+The most common data type in R is a vector, which is a series of values composed of either numbers or characters. We can create our own vectors by either typing all values in manually or using built in commands.
+
+```{webr}
+tempc <- c(38.00, 38.37, 37.86, 38.45, 38.09)
+tempc
+
+x <- c(38.00, 38.37, "bed") # a mix of data types elements 
+x
+```
+
+## Sequencing
+
+`seq` can be used to automate this process if you have a constant change between values.
+
+The `by` and `length.out` arguments in the `seq()` function control how the sequence is generated:
+
+-   `by` sets the constant step size between each number in the sequence.
+-   `length.out` sets the total number of elements in the sequence and adjusts the step size automatically.
+
+For example, if you want to create a variable for time for a timeseries over 25 years, it could look like this:
+
+```{webr}
+t <- seq(0, 25) # defaults to increments of 1 
+t
+```
+
+To create a sequence with different increments:
+
+```{webr}
+t <- seq(0, 25, by = 2.5)
+t
+```
+
+To create a sequence with a fixed number of timestamps.
+
+```{webr}
+t <- seq(0, 25, length.out = 5) # 5 timestamps
+t
+```
+
+You can explore certain qualities of a vector using built in functions. Some of these are:
+
+```{webr}
+#| setup: true
+#| include: false
+#| autorun: true
+#| exercise: 
+#|    - sec_2
+
+x <- c(38.00, 38.37, "bed")
+t <- seq(0, 25, length.out = 5) 
+```
+
+```{webr}
+#| exercise: sec_2
+# How many elements are within the vector 
+length(t)
+length(x) 
+
+# Type of element of a vector 
+class(t)
+class(x) # R automatically changes the data type of vectors with elements of mixed data type to string form
+
+# Overview of a vector's elements
+str(t)
+str(x) 
+
+```
+
+These functions are useful when you are working with large datasets and are performing exploratory analysis to see what types of visualizations and analysis you can perform on your data. But more on that later!
+
+Sometimes you only want to extract certain values from a given vector. You can subset vectors to extract certain values using certain strategies:
+
+## Indexing the vector
+
+In R, you can access specific elements of a vector using square brackets `[ ]` and specifying the position of the element. Indexing starts at 1 (unlike 0 in some other programming languages).
+
+```{webr}
+tempc<-c(38.00, 38.37, 37.86, 38.45, 38.09)
+tempc[4] #use of bracket to extract only the 4th value in the vector 
+tempc[c(4,5)] #extracts more than one value in the vector 
+```
+
+## Using conditions and logical statements
+
+Logical comparisons compare values and return TRUE or FALSE. Below is a list of common comparison operators:
+
+-   `>`: Strictly greater than
+-   `>=`: Greater than or equal to
+-   `<`: Strictly less than
+-   `<=`: Less than or equal to
+-   `==`: Equal to (Note: double-equal-signs are used to avoid confusion with =, which is sometimes also used as an assignment function similar to \<-)
+-   `!=`: Not equal to (Note: `!` represents NOT)
+-   `is.na()`: Value is NA
+
+Here is an example:
+
+```{webr}
+t <- seq(0, 25)
+t
+
+# If you only want to select for when t > 10
+t > 10
+
+# Save the updated vector
+t[t > 10] -> t
+t # Overwriting the old vector with the new conditions 
+```
+
+## Handling missing data
+
+Missing data isn't uncommon when working with real world data, and R has built in functions to remove it (as the presence of NA values can lead to error in calculations). For example:
+
+```{webr}
+ibuprophen_dosages <- c(200, 400, NA, 800, 1000)
+mean(ibuprophen_dosages)
+```
+
+So, to fix this we can remove the missing values a few different ways:
+
+```{webr}
+#| setup: true
+#| include: false
+#| autorun: true
+#| exercise: 
+#|    - sec_5
+
+ibuprophen_dosages <- c(200, 400, NA, 800, 1000)
+```
+
+```{webr}
+#| exercise: sec_5
+# Set na.rm = TRUE
+mean(ibuprophen_dosages, na.rm = TRUE)
+
+# Extract the values that are not missing 
+ibuprophen_dosages[!is.na(ibuprophen_dosages)]
+
+# Return the object with only complete values 
+na.omit(ibuprophen_dosages)
+
+ibuprophen_dosages[complete.cases(ibuprophen_dosages)]
+
+```
+
+## For loops
+
+In simple terms, a for loop functions by performing a certain operation for each number in a list. For loops are generally not used as much in R as in some other programming languages, but there are instances where they might be the most efficient method in dealing with certain types of data. For now, let's demonstrate the concept using an earlier example of a function:
+
+```{webr}
+#making a for loop to convert temperatures from Celsius to Farenheit 
+tempc <- c(38.00, 38.37, 37.86, 38.45, 38.09)
+tempf <- c() #initialize vector to store temps in Farenheit in
+
+for (i in 1:length(tempc)) {
+  tempf[i] <- tempc[i] * (9/5) + 32
+}
+
+tempf
+
+```
+
+Let's do another example. Say we want to make a for loop to calculate the incidence of influenza in a hypothetical population.
+
+```{webr}
+num_new_cases <- c(33, 121, 156, 325, 278, 194, 222, 98, 45, 187) 
+incidence <- c() # initialize incidence vector
+pop <- 500000 # population size
+
+for ( i in 1:length(num_new_cases)) { # i loops from 1 to length(num_new_cases)
+  incidence[i] <- (num_new_cases[i]/pop) * 1000   # content to be looped over
+}
+
+incidence
+
+# This gives us the incidence rate per 1000 people!
+```
+
+In these examples, there are often simpler built in functions in R to get the same results. These were merely examples to demonstrate how a for loop functions: apply this command to every item in a vector. Examples where for loops are used regularly in epidemiology is for modeling the spread of an infectious disease in a susceptible population. We won't delve into these concepts as they go into detail beyond the scope of the course, but it is important to understand the basics of a for loop for future reference!
+
+## Return to Learning Hub Homepage
+
+[Learning Hub Homepage](https://uoft-hmb-coding.github.io){.btn .btn-primary}
